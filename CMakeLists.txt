@@ -15,7 +15,7 @@ list(APPEND CRUCIBLE_DEAR_IMGUI third-party/dear-imgui/backends/imgui_impl_sdl2.
 
 add_subdirectory(third-party/crucible)
 
-add_executable(CrucibleEditor ${CRUCIBLE_DEAR_IMGUI} src/Program.cpp src/Graphics/DearImGUI/imgui_impl_slag.cpp src/Graphics/DearImGUI/imgui_impl_slag.h src/Graphics/Fonts.h src/Controls/MenuBar.cpp src/Controls/MenuBar.h src/Controls/Control.h src/Controls/MainViewport.cpp src/Controls/MainViewport.h src/Controls/SceneTree.cpp src/Controls/SceneTree.h src/Controls/Inspector.cpp src/Controls/Inspector.h src/Controls/Resources.cpp src/Controls/Resources.h)
+add_executable(CrucibleEditor ${CRUCIBLE_DEAR_IMGUI} src/Program.cpp src/Graphics/DearImGUI/imgui_impl_slag.cpp src/Graphics/DearImGUI/imgui_impl_slag.h src/Graphics/Fonts.h src/Controls/MenuBar.cpp src/Controls/MenuBar.h src/Controls/Control.h src/Graphics/DearImGUI/ImGuiInterop.cpp src/Graphics/DearImGUI/ImGuiInterop.h)
 target_include_directories(CrucibleEditor PRIVATE third-party/dear-imgui)
 target_link_libraries(CrucibleEditor Crucible)
 #==============================================================================

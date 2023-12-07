@@ -7,6 +7,14 @@
         <RootNamespace>CrucibleEditor</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\..\..\third-party\crucible\dotnet\Crucible\Crucible-Runtime\Crucible-Runtime.csproj" />
     </ItemGroup>

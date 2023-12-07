@@ -9,10 +9,7 @@
 #include "backends/imgui_impl_sdl2.h"
 #include "Graphics/Fonts.h"
 #include "Controls/MenuBar.h"
-#include "Controls/MainViewport.h"
-#include "Controls/SceneTree.h"
-#include "Controls/Inspector.h"
-#include "Controls/Resources.h"
+#include "Graphics/DearImGUI/ImGuiInterop.h"
 
 
 int main(int argc, char** args)
@@ -84,15 +81,12 @@ int main(int argc, char** args)
     ImGui_ImplSlag_Init(swapchain->imageFormat());
 
     crucible::controls::MenuBar menuBar;
-    crucible::controls::MainViewport mainViewport;
-    crucible::controls::SceneTree sceneTree;
-    crucible::controls::Inspector inspector;
-    crucible::controls::Resources resources;
 
     crucible::ScriptingEngine::loadManagedDll("Crucible-Editor.dll");
-    auto type = crucible::ScriptingEngine::getManagedType("CrucibleEditor.EditorTest, Crucible-Editor");
-    void (*test)() = static_cast<void (*)(void)>(crucible::ScriptingEngine::getManagedFunction(type, "Test"));
-    test();
+    auto inspectorType = crucible::ScriptingEngine::getManagedType("CrucibleEditor.GUI.ProgramInterface, Crucible-Editor");
+    auto drawInterface = inspectorType.getFunction<void(*)()>("DrawInterface");
+    crucible::ImGuiInterop::registerInteropFunctions();
+
 
     while(open)
     {
@@ -138,10 +132,7 @@ int main(int argc, char** args)
             ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
             menuBar.show();
-            mainViewport.show();
-            sceneTree.show();
-            inspector.show();
-            resources.show();
+            drawInterface();
 
 
             ImGui::PopFont();
