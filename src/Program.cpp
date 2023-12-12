@@ -56,12 +56,14 @@ int main(int argc, char** args)
     pd.nativeDisplayType = wmInfo.info.x11.display;
 #endif
 
-
+#undef ABSOLUTE
 
     slag::Swapchain* swapchain = slag::SwapchainBuilder(pd)
             .setDesiredBackBuffers(2)
             .addVertexBufferResource("ImGuiVerts",{15000,slag::Buffer::Usage::GPU})
             .addIndexBufferResource("ImGuiIndexes",{15000,slag::Buffer::Usage::GPU})
+            .addTextureResource("Color",{slag::TextureResourceDescription::SizingMode::ABSOLUTE,1920,1080,slag::Pixels::R8G8B8A8_UNORM,slag::Texture::Usage::COLOR})
+            .addTextureResource("Depth",{slag::TextureResourceDescription::SizingMode::ABSOLUTE,1920,1080,slag::Pixels::D32_SFLOAT,slag::Texture::Usage::DEPTH})
             .setHeight(500).setWidth(800).create();
 
     // Setup Dear ImGui context
@@ -75,7 +77,8 @@ int main(int argc, char** args)
 
     ImFontConfig font_cfg;
     font_cfg.FontDataOwnedByAtlas = false;
-    ImFont* recharge = io.Fonts->AddFontFromMemoryTTF(recharge_bd_ttf,recharge_bd_ttf_len,14,&font_cfg);
+    ImFont* Title = io.Fonts->AddFontFromMemoryTTF(recharge_bd_ttf,recharge_bd_ttf_len,16,&font_cfg);
+    ImFont* Body = io.Fonts->AddFontFromMemoryTTF(recharge_bd_ttf,recharge_bd_ttf_len,14,&font_cfg);
 
     ImGui_ImplSDL2_InitForOther(mainWindow);
     ImGui_ImplSlag_Init(swapchain->imageFormat());
@@ -85,7 +88,7 @@ int main(int argc, char** args)
     crucible::ScriptingEngine::loadManagedDll("Crucible-Editor.dll");
     auto inspectorType = crucible::ScriptingEngine::getManagedType("CrucibleEditor.GUI.ProgramInterface, Crucible-Editor");
     auto drawInterface = inspectorType.getFunction<void(*)()>("DrawInterface");
-    crucible::ImGuiInterop::registerInteropFunctions();
+    crucible::ImGuiInterop::registerInteropFunctions(Title,Body);
 
 
     while(open)
@@ -118,7 +121,7 @@ int main(int argc, char** args)
             ImGui_ImplSlag_NewFrame();
             ImGui_ImplSDL2_NewFrame();
             ImGui::NewFrame();
-            ImGui::PushFont(recharge);
+            ImGui::PushFont(Title);
 
             auto* commandBuffer = frame->getCommandBuffer();
             slag::Rectangle rect{{0,0},{swapchain->width(),swapchain->height()}};
@@ -133,7 +136,6 @@ int main(int argc, char** args)
 
             menuBar.show();
             drawInterface();
-
 
             ImGui::PopFont();
             ImGui::Render();

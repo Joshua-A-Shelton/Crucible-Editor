@@ -1,4 +1,5 @@
-﻿using Arch.Core.Extensions;
+﻿using System.Reflection;
+using Arch.Core.Extensions;
 using Crucible;
 using CrucibleEditor.GUI.Controls;
 using CrucibleEditor.GUI.Controls.Inspector;
@@ -16,8 +17,8 @@ public class Inspector: Widget
 
     static Inspector()
     {
-        InspectorRenderer.RegisterRenderer(typeof(Transform3D),new TransformView());
-        InspectorRenderer.RegisterRenderer(typeof(Vector3), new Vector3dView());
+        InspectorRenderer.RegisterRenderer(new TransformView());
+        InspectorRenderer.RegisterRenderer(new Vector3dView());
     }
     protected override void Render()
     {
@@ -26,5 +27,23 @@ public class Inspector: Widget
         {
             selectedGameObject.DrawComponents();
         }
+    }
+
+    public static string ExposedName(Type type, string fieldName)
+    {
+        var member = type.GetMember(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(mi=>Attribute.IsDefined(mi,typeof(ExposeAttribute)));
+        if (member == null)
+        {
+            throw new ArgumentException("Field \"" + fieldName + "\" is not exposed for type \"" + type + "\"");
+        }
+
+        var mi = member.ElementAt(0);
+        ExposeAttribute? exposeAttribute = mi.GetCustomAttribute(typeof(ExposeAttribute)) as ExposeAttribute;
+        if (exposeAttribute != null && exposeAttribute.Name != null)
+        {
+            return exposeAttribute.Name;
+        }
+
+        return fieldName;
     }
 }

@@ -22,7 +22,9 @@ public abstract unsafe class Widget
             ImGUI.Begin(Title);
         }
 
+        ImGUI.PushFont(ImGUI.FontStyle.Body);
         Render();
+        ImGUI.PopFont();
         ImGUI.End();
     }
     

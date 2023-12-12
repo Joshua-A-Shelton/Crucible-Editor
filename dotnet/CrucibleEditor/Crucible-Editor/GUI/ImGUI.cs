@@ -30,6 +30,41 @@ internal static unsafe class ImGUI
         _end_ptr();
     }
 
+    private static delegate* unmanaged<void> _pushTitleFont_ptr;
+    private static delegate* unmanaged<void> _pushBodyFont_ptr;
+    public enum FontStyle
+    {
+        Title,
+        Body
+    }
+
+    public static void PushFont(FontStyle style)
+    {
+        switch (style)
+        {
+            case FontStyle.Title:
+                _pushTitleFont_ptr();
+                break;
+            case FontStyle.Body:
+                _pushBodyFont_ptr();
+                break;
+        }
+    }
+    
+    private static delegate* unmanaged<void> _popFont_ptr;
+
+    public static void PopFont()
+    {
+        _popFont_ptr();
+    }
+
+    private static delegate* unmanaged<string, int, bool> _collapsingHeader_ptr;
+
+    public static bool CollapsingHeader(string label, int flags=0)
+    {
+        return _collapsingHeader_ptr(label, flags);
+    }
+
     private static delegate* unmanaged<string, string, void> _label_ptr;
 
     public static void Label(string text, string label)

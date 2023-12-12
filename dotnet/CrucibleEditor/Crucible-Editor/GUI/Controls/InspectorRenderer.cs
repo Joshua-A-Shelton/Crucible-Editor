@@ -9,14 +9,9 @@ public static class InspectorRenderer
 {
     private static Dictionary<Type, object> _renderers = new Dictionary<Type, object>();
 
-    internal static void RegisterRenderer(Type forComponent,object renderer)
+    internal static void RegisterRenderer<T>(InspectorComponentView<T> renderer)
     {
-        /*if (!rendererType.IsSubclassOf(typeof(InspectorComponentView<>)))
-        {
-            throw new ArgumentException("rendererType must inherit InspectorComponentView");
-        }*/
-
-        _renderers[forComponent] = renderer;
+        _renderers[typeof(T)] = renderer;
 
     }
     public static void DrawComponent<T>(ref T component)
@@ -29,24 +24,33 @@ public static class InspectorRenderer
             {
                 title = componentAttribute.ExposedName;
             }
-            ImGUI.Label("##Component",title);
 
-            object? componentRenderer;
-            if (_renderers.TryGetValue(typeof(T), out componentRenderer))
+            if (ImGUI.CollapsingHeader(title))
             {
-                InspectorComponentView<T> compRenderer = (InspectorComponentView<T>) componentRenderer;
-                compRenderer.Draw(ref component);
+                //ImGUI.Label("##Component", title);
+
+                object? componentRenderer;
+                if (_renderers.TryGetValue(typeof(T), out componentRenderer))
+                {
+                    InspectorComponentView<T> compRenderer = (InspectorComponentView<T>) componentRenderer;
+                    compRenderer.Draw(ref component);
+                }
             }
         }
     }
 
-    public static void DrawMember<T>(ref T component)
+    public static void DrawMember<T>(string name,ref T component)
     {
+        ImGUI.Label(name,component.GetType().Name);
         object? componentView = null;
         if (_renderers.TryGetValue(typeof(T), out componentView))
         {
             InspectorComponentView<T> compRenderer = (InspectorComponentView<T>) componentView;
             compRenderer.Draw(ref component);
+        }
+        else
+        {
+            
         }
     }
 }
