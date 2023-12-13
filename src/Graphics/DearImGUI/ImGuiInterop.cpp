@@ -10,12 +10,10 @@ namespace crucible
 
     void pushTitleFont()
     {
-        std::cout << IMGUI_TITLE_FONT << std::endl;
         ImGui::PushFont(IMGUI_TITLE_FONT);
     }
     void pushBodyFont()
     {
-        std::cout << IMGUI_BODY_FONT << std::endl;
         ImGui::PushFont(IMGUI_BODY_FONT);
     }
 
