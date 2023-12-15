@@ -62,8 +62,8 @@ int main(int argc, char** args)
             .setDesiredBackBuffers(2)
             .addVertexBufferResource("ImGuiVerts",{15000,slag::Buffer::Usage::GPU})
             .addIndexBufferResource("ImGuiIndexes",{15000,slag::Buffer::Usage::GPU})
-            .addTextureResource("Color",{slag::TextureResourceDescription::SizingMode::ABSOLUTE,1920,1080,slag::Pixels::R8G8B8A8_UNORM,slag::Texture::Usage::COLOR})
-            .addTextureResource("Depth",{slag::TextureResourceDescription::SizingMode::ABSOLUTE,1920,1080,slag::Pixels::D32_SFLOAT,slag::Texture::Usage::DEPTH})
+            .addTextureResource("Color",{slag::TextureResourceDescription::SizingMode::ABSOLUTE,1920,1080,slag::Pixels::R8G8B8A8_UNORM,slag::Texture::Usage::COLOR,true})
+            .addTextureResource("Depth",{slag::TextureResourceDescription::SizingMode::ABSOLUTE,1920,1080,slag::Pixels::D32_SFLOAT,slag::Texture::Usage::DEPTH,true})
             .setHeight(500).setWidth(800).create();
 
     // Setup Dear ImGui context
@@ -128,9 +128,18 @@ int main(int argc, char** args)
             commandBuffer->setViewport(rect);
             commandBuffer->setScissors(rect);
 
+            slag::Rectangle sceneView{{0,0},{1920,1080}};
+            slag::Attachment scene[2];
+            scene[0] = {.texture = frame->getTextureResource("Color"),.clearOnLoad = true, .clear{0.5,0.5,0.5,0.5}};
+            scene[1] = {.texture = frame->getTextureResource("Depth"),.clearOnLoad = true};
+            commandBuffer->setTargetFramebuffer(sceneView,&scene[0],1,scene[1]);
+
+            commandBuffer->endTargetFramebuffer();
+
             slag::Rectangle view{{0,0},{swapchain->width(),swapchain->height()}};
-            slag::Attachment colorAttachment{.texture = frame->getBackBuffer(), .clearOnLoad = true, .clear={0.5,0.5,0.5,0.5}};
-            commandBuffer->setTargetFramebuffer(view,&colorAttachment,1);
+
+            slag::Attachment renderSurface{.texture = frame->getBackBuffer(), .clearOnLoad = true, .clear={0.5, 0.5, 0.5, 0.5}};
+            commandBuffer->setTargetFramebuffer(view, &renderSurface, 1);
 
             ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
