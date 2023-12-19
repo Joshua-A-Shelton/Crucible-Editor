@@ -20,7 +20,10 @@ bool ImGui_ImplSlag_Init(slag::Pixels::PixelFormat renderTargetFormat)
     auto backEndData = imGui_getSlagBackendData();
     slag::FramebufferDescription description;
     description.addColorTarget(renderTargetFormat);
-    backEndData->shader = slag::Shader::create("Graphics/DefaultShaders/dearimgui.vert.spv", "Graphics/DefaultShaders/dearimgui.frag.spv",description);
+    slag::VertexDescriptionBuilder vertexBuilder;
+    vertexBuilder.add(slag::Pixels::R32G32_SFLOAT).add(slag::Pixels::R32G32_SFLOAT).add(slag::Pixels::R8G8B8A8_UNORM);
+    auto vertdesc = vertexBuilder.build();
+    backEndData->shader = slag::Shader::create("Graphics/DefaultShaders/dearimgui.vert.spv", "Graphics/DefaultShaders/dearimgui.frag.spv",vertdesc,description);
     backEndData->renderTargetFormat = renderTargetFormat;
     backEndData->sampler = slag::TextureSamplerBuilder().create();
 
