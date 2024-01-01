@@ -25,6 +25,13 @@ namespace crucible
     {
         return ImGui::TreeNode(id,fmt);
     }
+
+    void GetContentRegionAvail(ImVec2& ref)
+    {
+        ref = ImGui::GetContentRegionAvail();
+    }
+
+
     void ImGuiInterop::registerInteropFunctions(ImFont* title, ImFont* body)
     {
         auto from = "CrucibleEditor.GUI.ImGUI, Crucible-Editor";
@@ -45,5 +52,7 @@ namespace crucible
         ScriptingEngine::registerUnmanagedFunction(from, "_beginPopup_ptr", reinterpret_cast<void **>(ImGui::BeginPopup));
         ScriptingEngine::registerUnmanagedFunction(from, "_endPopup_ptr", reinterpret_cast<void **>(ImGui::EndPopup));
         ScriptingEngine::registerUnmanagedFunction(from, "_selectable_ptr", reinterpret_cast<void **>((bool (*)(const char *, bool*, ImGuiSelectableFlags, const ImVec2 &)) ImGui::Selectable));
+        ScriptingEngine::registerUnmanagedFunction(from, "_image_ptr", reinterpret_cast<void **>(ImGui::Image));
+        ScriptingEngine::registerUnmanagedFunction(from, "_getContentRegionAvail_ptr", reinterpret_cast<void **>(GetContentRegionAvail));
     }
 } // crucible

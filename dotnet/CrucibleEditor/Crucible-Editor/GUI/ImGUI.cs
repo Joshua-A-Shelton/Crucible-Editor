@@ -1,4 +1,5 @@
-﻿using Crucible;
+﻿using System.Drawing;
+using Crucible;
 
 namespace CrucibleEditor.GUI;
 
@@ -125,6 +126,49 @@ internal static unsafe class ImGUI
     public static bool Selectable(string label, ref bool isSelected, int flags, ref Vector2 size)
     {
         return _selectable_ptr(label, ref isSelected, flags, ref size);
+    }
+
+    public static delegate* unmanaged<IntPtr, ref Vector2, ref Vector2, ref Vector2, ref Vector4, ref Vector4,void> _image_ptr;
+
+    public static void Image(Texture texture, Vector2 size)
+    {
+        Vector2 topLeftUV = new Vector2(0, 0);
+        Vector2 bottomRightUV = new Vector2(1, 1);
+        Vector4 color = new Vector4(1, 1, 1, 1);
+        Vector4 borderColor = new Vector4(0,0,0,0);
+        _image_ptr(texture.lowLevelHandle, ref size, ref topLeftUV, ref bottomRightUV, ref color, ref borderColor);
+    }
+
+    public static void Image(Texture texture, Vector2 size, Vector2 topLeftUV, Vector2 bottomRightUV)
+    {
+        Vector4 color = new Vector4(1, 1, 1, 1);
+        Vector4 borderColor = new Vector4(0,0,0,0);
+        _image_ptr(texture.lowLevelHandle, ref size, ref topLeftUV, ref bottomRightUV, ref color, ref borderColor);
+    }
+
+    public static void Image(Texture texture, Vector2 size, Vector2 topLeftUV, Vector2 bottomRightUV, Vector4 color)
+    {
+        Vector4 borderColor = new Vector4(0,0,0,0);
+        _image_ptr(texture.lowLevelHandle, ref size, ref topLeftUV, ref bottomRightUV, ref color, ref borderColor);
+    }
+    
+    public static void Image(Texture texture, Vector2 size, Vector2 topLeftUV, Vector2 bottomRightUV, Vector4 color, Vector4 borderColor)
+    {
+        _image_ptr(texture.lowLevelHandle, ref size, ref topLeftUV, ref bottomRightUV, ref color, ref borderColor);
+    }
+    
+    internal static void Image(IntPtr texture, Vector2 size, Vector2 topLeftUV, Vector2 bottomRightUV, Vector4 color, Vector4 borderColor)
+    {
+        _image_ptr(texture, ref size, ref topLeftUV, ref bottomRightUV, ref color, ref borderColor);
+    }
+
+    private static delegate* unmanaged<ref Vector2,void> _getContentRegionAvail_ptr;
+
+    public static Vector2 GetContentRegionAvail()
+    {
+        Vector2 v = new Vector2();
+        _getContentRegionAvail_ptr(ref v);
+        return v;
     }
 }
 #pragma warning restore 0649
