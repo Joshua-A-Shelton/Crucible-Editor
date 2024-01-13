@@ -163,7 +163,7 @@ namespace crucible
 
     void Editor::resizeMainViewPortTexture(float width, float height)
     {
-        if(editorInstance!= nullptr)
+        if(editorInstance!= nullptr && width > 0 && height > 0)
         {
             editorInstance->swapchain()->setResource("MainViewportColor",{slag::TextureResourceDescription::SizingMode::Absolute,width,height,slag::Pixels::R8G8B8A8_UNORM,slag::Texture::Usage::COLOR,true});
             editorInstance->swapchain()->setResource("MainViewportDepth",{slag::TextureResourceDescription::SizingMode::Absolute,width,height,slag::Pixels::D32_SFLOAT,slag::Texture::Usage::DEPTH,true});
