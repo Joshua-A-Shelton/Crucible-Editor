@@ -19,4 +19,24 @@
       <ProjectReference Include="..\..\..\third-party\crucible\dotnet\Crucible\Crucible-Runtime\Crucible-Runtime.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Avalonia" Version="11.0.10" />
+      <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+      <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
+      <PackageReference Include="Avalonia.FreeDesktop" Version="11.0.10" />
+      <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+      <PackageReference Include="NP.Ava.UniDock" Version="1.0.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\Crucible.ico" />
+      <AvaloniaResource Include="Resources\Crucible.ico" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AvaloniaXaml Update="App.axaml">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </AvaloniaXaml>
+    </ItemGroup>
+
 </Project>

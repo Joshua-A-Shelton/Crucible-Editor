@@ -1,7 +1,6 @@
 #ifndef CRUCIBLEEDITOR_EDITOR_H
 #define CRUCIBLEEDITOR_EDITOR_H
 #include <crucible/Game.h>
-#include "imgui.h"
 #include <slag/SlagLib.h>
 
 namespace crucible
@@ -17,14 +16,6 @@ namespace crucible
         void render(slag::Frame* frame)override;
         void cleanup()override;
     private:
-        ImFont* Title;
-        ImFont* Body;
-
-
-        void (*drawInterface)() = nullptr;
-        void (*setSceneTexture)(slag::Texture*) = nullptr;
-
-        static void resizeMainViewPortTexture(float width, float height);
     };
 
 } // crucible
