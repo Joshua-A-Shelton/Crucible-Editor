@@ -18,12 +18,10 @@
     </ResourceDictionary>
   </Window.Resources>
   <Grid RowDefinitions="Auto, *">
-      <Menu Grid.Row="0">
-          <MenuItem Header="_File"></MenuItem>
-      </Menu>
-      <np:RootDockGroup Grid.Row="1" DockId="RootGroup"
-                        np:DockAttachedProperties.TheDockManager=
-                        "{StaticResource TheDockManager}">
+    <Menu Grid.Row="0">
+      <MenuItem Header="_File"></MenuItem>
+    </Menu>
+    <np:RootDockGroup Grid.Row="1" DockId="RootGroup" np:DockAttachedProperties.TheDockManager="{StaticResource TheDockManager}">
       <np:StackDockGroup TheOrientation="Horizontal">
         <np:StackDockGroup TheOrientation="Vertical">
           <np:DockItem Header="Scene Tree" DockId="SceneTree"><controls:SceneTree></controls:SceneTree></np:DockItem>

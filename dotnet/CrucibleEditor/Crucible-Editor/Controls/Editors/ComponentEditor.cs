@@ -14,28 +14,11 @@ public abstract class ComponentEditor<T> : UserControl
         set { _component = value; OnPropertyChanged(nameof(Component)); }
     }
 
-    private string _componentName;
-    public string ComponentName
-    {
-        get { return _componentName;}
-        set { _componentName = value; OnPropertyChanged(nameof(ComponentName)); }
-
-    }
-
     internal void setComponentInit(object component)
     {
         if (component is T compObj)
         {
             Component = compObj;
-            var comp = typeof(T).GetCustomAttributes(typeof(ComponentAttribute), false).FirstOrDefault() as ComponentAttribute;
-            if (comp != null && comp.ExposedName!=null)
-            {
-                ComponentName = comp.ExposedName;
-            }
-            else
-            {
-                ComponentName = typeof(T).Name;
-            }
             ComponentSet();
         }
         else

@@ -8,9 +8,15 @@
              x:Class="CrucibleEditor.Controls.PropertyViewer">
     <Control.Resources>
         <converter:GameObjectToPropertiesConverter x:Key="ToPropertiesConverter"/>
-        <crucibleEditor:ComponentViewLocator x:Key="ComponentViewLocator"></crucibleEditor:ComponentViewLocator>
+        <crucibleEditor:ComponentViewLocator x:Key="ComponentViewLocator"/>
+        <converter:TypeToNameConverter x:Key="ToNameConverter"/>
     </Control.Resources>
-    <ItemsControl ItemsSource="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedGameObject, Converter={StaticResource ToPropertiesConverter}}" ItemTemplate="{StaticResource ComponentViewLocator}">
+    <ItemsControl ItemsSource="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedGameObject, Converter={StaticResource ToPropertiesConverter}}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Expander Header="{Binding Converter={StaticResource ToNameConverter}}" ContentTemplate="{StaticResource ComponentViewLocator}" Content="{Binding}" HorizontalAlignment="Stretch"></Expander>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
     </ItemsControl>
     
 </UserControl>

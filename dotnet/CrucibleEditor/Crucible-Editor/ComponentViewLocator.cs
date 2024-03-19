@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using Avalonia.Layout;
 using Avalonia.Media;
 using Crucible;
 using CrucibleEditor.Controls.Editors;
@@ -30,23 +31,19 @@ public class ComponentViewLocator: IDataTemplate
     
     public Control? Build(object? param)
     {
-        Expander ex = new Expander();
-        ex.Header = param.GetType().ToString();
         Type? c = null;
         if (_componentEditors.TryGetValue(param.GetType(), out c))
         {
             
             var content = (Control)Activator.CreateInstance(c, new object[]{});
             c.GetMethod("setComponentInit", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(content,new []{param});
-            ex.Content = content;
+            return content;
 
         }
         else
         {
-            ex.Content = new TextBlock{ Text = "Unable to present "+param.GetType()};
-
+            return new TextBlock{ Text = "Unable to present "+param.GetType()};
         }
-        return ex;
     }
 
     public bool Match(object? data)
