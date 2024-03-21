@@ -4,6 +4,7 @@ using Avalonia.Controls.Templates;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Crucible;
+using CrucibleEditor.Controls.Components;
 using CrucibleEditor.Controls.Editors;
 using CrucibleEditor.Utils;
 
@@ -17,14 +18,14 @@ public class ComponentViewLocator: IDataTemplate
         var editors = AppDomain.CurrentDomain.GetAssemblies()
             // alternative: .GetExportedTypes()
             .SelectMany(domainAssembly => domainAssembly.GetTypes())
-            .Where(type => !type.IsAbstract && type.IsSubClassOfGeneric(typeof(ComponentEditor<>))
+            .Where(type => !type.IsAbstract && type.IsSubClassOfGeneric(typeof(ComponentViewer<>))
                 // alternative: => type.IsSubclassOf(typeof(B))
                 // alternative: && type != typeof(B)
                 // alternative: && ! type.IsAbstract
             ).ToArray();
         foreach (var editor in editors)
         {
-            var forType = editor.GetProperty("Component", BindingFlags.Instance | BindingFlags.Public).PropertyType;
+            var forType = editor.BaseType.GenericTypeArguments[0];
             _componentEditors[forType] = editor;
         }
     }
@@ -36,7 +37,6 @@ public class ComponentViewLocator: IDataTemplate
         {
             
             var content = (Control)Activator.CreateInstance(c, new object[]{});
-            c.GetMethod("setComponentInit", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(content,new []{param});
             return content;
 
         }

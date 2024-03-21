@@ -39,4 +39,9 @@
       </AvaloniaXaml>
     </ItemGroup>
 
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Controls\Editors\Properties\Vector3Editor.axaml" />
+      <UpToDateCheckInput Remove="Controls\Editors\Transform3DControl.axaml" />
+    </ItemGroup>
+
 </Project>
