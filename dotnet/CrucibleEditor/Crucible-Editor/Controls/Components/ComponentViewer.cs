@@ -1,12 +1,14 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Threading;
+using Crucible;
 
 namespace CrucibleEditor.Controls.Components;
 
 public abstract class ComponentViewer<T>: UserControl
 {
-    public abstract void UpdateEditors();
+    protected abstract void UpdateEditors(ref T component);
+    public WeakReference<GameObject> ReferenceObject = new WeakReference<GameObject>(null);
 
     public override void Render(DrawingContext context)
     {
@@ -16,8 +18,13 @@ public abstract class ComponentViewer<T>: UserControl
 
     private void updateAndRedraw()
     {
-        UpdateEditors();
-        InvalidateVisual();
+        GameObject go;
+        if (ReferenceObject.TryGetTarget(out go) && go !=null)
+        {
+            UpdateEditors(ref go.GetComponent<T>());
+            InvalidateVisual();
+        }
+        
     }
     
     

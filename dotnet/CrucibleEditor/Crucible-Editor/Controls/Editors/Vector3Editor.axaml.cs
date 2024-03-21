@@ -21,39 +21,44 @@ public partial class Vector3Editor : Editor<Crucible.Vector3>
     public static readonly DirectProperty<Vector3Editor, float> ZProperty = AvaloniaProperty.RegisterDirect<Vector3Editor, float>(nameof(Z),
         vector3Editor => vector3Editor.Z,
         (vector3Editor, val) => vector3Editor.Z = val);
-    
     public float X
     {
         get { return EditorValue.x; }
-        set { SetAndRaise(XProperty, ref _editorValue.x, value); }
+        set
+        {
+            SetAndRaise(XProperty, ref _editorValue.x, value);
+            EditorValue = _editorValue;
+        }
     }
-
+    
     public float Y
     {
         get { return EditorValue.y; }
-        set { SetAndRaise(XProperty, ref _editorValue.y, value);}
+        set
+        {
+            SetAndRaise(YProperty, ref _editorValue.y, value);
+            EditorValue = _editorValue;
+        }
     }
 
     public float Z
     {
         get { return EditorValue.z; }
-        set { SetAndRaise(XProperty, ref _editorValue.z, value); }
+        set
+        {
+            SetAndRaise(ZProperty, ref _editorValue.z, value);
+            EditorValue = _editorValue;
+        }
     }
     public Vector3Editor()
     {
-        PropertyChanged += parentChanged;
         InitializeComponent();
     }
 
-    public void parentChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+    protected override void UpdateProperties()
     {
-        if (e.Property == EditorValueProperty)
-        {
-            var v3 = e.GetNewValue<Vector3>();
-            X = v3.x;
-            Y = v3.y;
-            Z = v3.z;
-        };
+        RaisePropertyChanged(XProperty,0,0);
+        RaisePropertyChanged(YProperty,0,0);
+        RaisePropertyChanged(ZProperty,0,0);
     }
-    
 }

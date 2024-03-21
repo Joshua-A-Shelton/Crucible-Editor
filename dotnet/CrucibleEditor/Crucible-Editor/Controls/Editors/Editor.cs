@@ -22,6 +22,19 @@ public abstract class Editor<T>: UserControl
             _editorUpdated = true;
         }
     }
+    
+    public Editor()
+    {
+        PropertyChanged += parentChanged;
+    }
+    
+    public void parentChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+    {
+        if (e.Property == EditorValueProperty)
+        {
+            UpdateProperties();
+        }
+    }
     public void SyncProperty(ref T runtime)
     {
         if (_editorUpdated)
@@ -34,5 +47,8 @@ public abstract class Editor<T>: UserControl
         }
         _editorUpdated = false;
     }
+
+    protected abstract void UpdateProperties();
     
+
 }

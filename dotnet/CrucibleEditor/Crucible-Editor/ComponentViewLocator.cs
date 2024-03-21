@@ -7,12 +7,14 @@ using Crucible;
 using CrucibleEditor.Controls.Components;
 using CrucibleEditor.Controls.Editors;
 using CrucibleEditor.Utils;
+using NP.Utilities;
 
 namespace CrucibleEditor;
 
 public class ComponentViewLocator: IDataTemplate
 {
     private static Dictionary<Type, Type> _componentEditors = new Dictionary<Type, Type>();
+    public WeakReference<GameObject> GameObject = new WeakReference<GameObject>(null);
     internal static void RegisterEditors()
     {
         var editors = AppDomain.CurrentDomain.GetAssemblies()
@@ -35,10 +37,9 @@ public class ComponentViewLocator: IDataTemplate
         Type? c = null;
         if (_componentEditors.TryGetValue(param.GetType(), out c))
         {
-            
             var content = (Control)Activator.CreateInstance(c, new object[]{});
+            c.GetField("ReferenceObject").SetValue(content,new WeakReference<GameObject>(GameWorldController.Instance.SelectedGameObject));
             return content;
-
         }
         else
         {

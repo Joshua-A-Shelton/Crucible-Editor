@@ -6,9 +6,16 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="CrucibleEditor.Controls.Editors.Vector3Editor"
              x:Name="element">
-    <Control.Resources>
-        <converters:Vector3ToStringConverter x:Key="Vector3ToStringConverter"/>
-    </Control.Resources>
 
-    <TextBlock Text="{Binding ElementName=element, Path=Y}"></TextBlock>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0" Text="{Binding ElementName=element, Path=X, Mode=TwoWay}"></TextBox>
+        <TextBox Grid.Column="1" Text="{Binding ElementName=element, Path=Y, Mode=TwoWay}"></TextBox>
+        <TextBox Grid.Column="2" Text="{Binding ElementName=element, Path=Z, Mode=TwoWay}"></TextBox>
+    </Grid>
+    
 </UserControl>

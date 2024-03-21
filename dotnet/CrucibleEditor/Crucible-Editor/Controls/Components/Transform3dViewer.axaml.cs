@@ -8,15 +8,15 @@ namespace CrucibleEditor.Controls.Components;
 public partial class Transform3dViewer : ComponentViewer<Transform3D>
 {
     
-    Vector3 v = new Vector3(15, 1, 30);
     public Transform3dViewer()
     {
         InitializeComponent();
     }
-
-    public override void UpdateEditors()
+    
+    protected override void UpdateEditors(ref Transform3D component)
     {
-        v.y *= 1.001f;
-        Position.SyncProperty(ref v);
+        var v3 = component.Position;
+        Position.SyncProperty(ref v3);
+        component.Position = v3;
     }
 }

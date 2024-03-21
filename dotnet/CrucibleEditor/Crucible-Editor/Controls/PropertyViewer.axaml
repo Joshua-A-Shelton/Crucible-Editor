@@ -11,7 +11,7 @@
         <crucibleEditor:ComponentViewLocator x:Key="ComponentViewLocator"/>
         <converter:TypeToNameConverter x:Key="ToNameConverter"/>
     </Control.Resources>
-    <ItemsControl ItemsSource="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedGameObject, Converter={StaticResource ToPropertiesConverter}}">
+    <ItemsControl x:Name="Components" ItemsSource="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedGameObject, Converter={StaticResource ToPropertiesConverter}}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <Expander Header="{Binding Converter={StaticResource ToNameConverter}}" ContentTemplate="{StaticResource ComponentViewLocator}" Content="{Binding}" HorizontalAlignment="Stretch"></Expander>
