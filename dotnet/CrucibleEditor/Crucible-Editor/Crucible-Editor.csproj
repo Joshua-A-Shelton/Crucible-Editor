@@ -44,4 +44,8 @@
       <UpToDateCheckInput Remove="Controls\Editors\Transform3DControl.axaml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Controls\Components\" />
+    </ItemGroup>
+
 </Project>

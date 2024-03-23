@@ -23,42 +23,35 @@ public partial class Vector3Editor : Editor<Crucible.Vector3>
         (vector3Editor, val) => vector3Editor.Z = val);
     public float X
     {
-        get { return EditorValue.x; }
+        get { return Editing.x; }
         set
         {
-            SetAndRaise(XProperty, ref _editorValue.x, value);
-            EditorValue = _editorValue;
+            SetAndRaise(XProperty, ref _editing.x, value);
+            Editing = _editing;
         }
     }
     
     public float Y
     {
-        get { return EditorValue.y; }
+        get { return Editing.y; }
         set
         {
-            SetAndRaise(YProperty, ref _editorValue.y, value);
-            EditorValue = _editorValue;
+            SetAndRaise(YProperty, ref _editing.y, value);
+            Editing = _editing;
         }
     }
 
     public float Z
     {
-        get { return EditorValue.z; }
+        get { return Editing.z; }
         set
         {
-            SetAndRaise(ZProperty, ref _editorValue.z, value);
-            EditorValue = _editorValue;
+            SetAndRaise(ZProperty, ref _editing.z, value);
+            Editing = _editing;
         }
     }
     public Vector3Editor()
     {
         InitializeComponent();
-    }
-
-    protected override void UpdateProperties()
-    {
-        RaisePropertyChanged(XProperty,0,0);
-        RaisePropertyChanged(YProperty,0,0);
-        RaisePropertyChanged(ZProperty,0,0);
     }
 }

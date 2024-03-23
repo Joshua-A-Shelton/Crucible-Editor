@@ -8,47 +8,39 @@ namespace CrucibleEditor.Controls.Editors;
 
 public abstract class Editor<T>: UserControl
 {
-    public static readonly DirectProperty<Editor<T>, T> EditorValueProperty =
-        AvaloniaProperty.RegisterDirect<Editor<T>, T>(nameof(EditorValue),
-            o=>o.EditorValue,
-            (o,v)=> o.EditorValue = v);
 
-    private bool _editorUpdated = false;
-    protected T _editorValue;
-    public T EditorValue
+    public static readonly DirectProperty<Editor<T>, T> EditingProperty =
+        AvaloniaProperty.RegisterDirect<Editor<T>, T>(nameof(Editing),o=>o.Editing, (o, v) => { o.Editing = v;});
+
+    protected T _editing;
+    private bool _fromEditor = false;
+    public T Editing
     {
-        get { return _editorValue; }
-        set { SetAndRaise(EditorValueProperty, ref _editorValue, value);
-            _editorUpdated = true;
+        get { return _editing;}
+        set 
+        {
+            SetAndRaise(EditingProperty, ref _editing, value);
+            _fromEditor = true;
         }
     }
     
     public Editor()
     {
-        PropertyChanged += parentChanged;
+
     }
-    
-    public void parentChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+
+    public virtual void Sync(ref T with)
     {
-        if (e.Property == EditorValueProperty)
+        if (_fromEditor)
         {
-            UpdateProperties();
-        }
-    }
-    public void SyncProperty(ref T runtime)
-    {
-        if (_editorUpdated)
-        {
-            runtime = _editorValue;
+            with = Editing;
         }
         else
         {
-            EditorValue = runtime;
+            Editing = with;
         }
-        _editorUpdated = false;
+        _fromEditor = false;
     }
-
-    protected abstract void UpdateProperties();
     
 
 }
