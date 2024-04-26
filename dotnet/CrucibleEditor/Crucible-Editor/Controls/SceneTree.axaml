@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:crucible="clr-namespace:Crucible;assembly=Crucible-Runtime"
              xmlns:crucibleEditor="clr-namespace:CrucibleEditor"
+             xmlns:nodes="clr-namespace:Crucible.Nodes;assembly=Crucible-Runtime"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="CrucibleEditor.Controls.SceneTree"
              Name="element">
-    <TreeView ItemsSource="{Binding ElementName=element, Path=GameObjects}" SelectedItem="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedGameObject, Mode=TwoWay}">
+    <TreeView ItemsSource="{Binding ElementName=element, Path=GameObjects}" SelectedItem="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedNode, Mode=TwoWay}">
         <TreeView.ItemTemplate>
-            <TreeDataTemplate DataType="{x:Type crucible:GameObject}" ItemsSource="{Binding Children}">
+            <TreeDataTemplate DataType="{x:Type nodes:Node}" ItemsSource="{Binding Children}">
                 <TextBlock Text="{Binding Name}" Foreground="Orange"></TextBlock>
             </TreeDataTemplate>
         </TreeView.ItemTemplate>

@@ -2,7 +2,6 @@
 #include "Editor.h"
 
 #include "crucible/Scripting/ScriptingEngine.h"
-#include <crucible/Scripting/GameWorld.h>
 
 
 namespace crucible

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Crucible;
+using Crucible.Nodes;
 
 namespace CrucibleEditor;
 
@@ -31,16 +32,16 @@ public class GameWorldController: INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    private GameObject _selectedGameObject = null;
-    public GameObject SelectedGameObject
+    private Node _selectedNode = null;
+    public Node SelectedNode
     {
         get
         {
-            return _selectedGameObject;
+            return _selectedNode;
         }
         set
         {
-            _selectedGameObject = value;
+            _selectedNode = value;
             OnPropertyChanged();
         }
     }

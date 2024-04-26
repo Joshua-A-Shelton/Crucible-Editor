@@ -1,7 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using CrucibleEditor.Controls.Editors;
 
 namespace CrucibleEditor;
 
@@ -11,7 +8,6 @@ public static class Main
     {
         try
         {
-            ComponentViewLocator.RegisterEditors();
             string[] args = new string[]{""};
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);

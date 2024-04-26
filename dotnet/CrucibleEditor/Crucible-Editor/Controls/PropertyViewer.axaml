@@ -3,20 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:crucibleEditor="clr-namespace:CrucibleEditor"
-             xmlns:converter="clr-namespace:CrucibleEditor.Converters"
+             xmlns:editors="clr-namespace:CrucibleEditor.Editors"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="CrucibleEditor.Controls.PropertyViewer">
-    <Control.Resources>
-        <converter:GameObjectToPropertiesConverter x:Key="ToPropertiesConverter"/>
-        <crucibleEditor:ComponentViewLocator x:Key="ComponentViewLocator"/>
-        <converter:TypeToNameConverter x:Key="ToNameConverter"/>
-    </Control.Resources>
-    <ItemsControl x:Name="Components" ItemsSource="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedGameObject, Converter={StaticResource ToPropertiesConverter}}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <Expander Header="{Binding Converter={StaticResource ToNameConverter}}" ContentTemplate="{StaticResource ComponentViewLocator}" Content="{Binding}" HorizontalAlignment="Stretch"></Expander>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
-    
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedNode}"></TextBlock>
+        <editors:BasicEditor Editing="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedNode}"/> 
+    </StackPanel>
 </UserControl>

@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Crucible;
+using Crucible.Nodes;
 
 namespace CrucibleEditor.Controls;
 
@@ -14,9 +15,9 @@ public partial class SceneTree : UserControl
         get { return GameWorld.Scene; }
     }
     
-    public List<GameObject> GameObjects
+    public List<Node> GameObjects
     {
-        get { return CurrentScene.GameObjects; }
+        get { return CurrentScene.Nodes; }
     }
     public SceneTree()
     {

@@ -42,10 +42,8 @@
     <ItemGroup>
       <UpToDateCheckInput Remove="Controls\Editors\Properties\Vector3Editor.axaml" />
       <UpToDateCheckInput Remove="Controls\Editors\Transform3DControl.axaml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controls\Components\" />
+      <UpToDateCheckInput Remove="Controls\Editors\UnknownEditor.axaml" />
+      <UpToDateCheckInput Remove="Controls\Editors\Vector3Editor.axaml" />
     </ItemGroup>
 
 </Project>
