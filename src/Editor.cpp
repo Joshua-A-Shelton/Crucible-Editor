@@ -48,20 +48,41 @@ namespace crucible
     void Editor::render(slag::Frame *frame)
     {
         frame->begin();
+        slag::FrameGraphBuilder fgb;
+        slag::GraphicsPass gp("basic_pass",slag::PipelineStage::PipelineStageFlags::ALL_GRAPHICS);
+
+        gp.addGlobalTexture("output",slag::Texture::Usage::COLOR,slag::Texture::Layout::RENDER_TARGET, slag::PipelineAccess::PipeLineAccessFlags::ACCESS_COLOR_ATTACHMENT_WRITE_BIT);
+        gp.setCallback([](slag::CommandBuffer* commandBuffer, slag::FrameResourceDictionary& resources, void* extra)
+        {
+            slag::Texture* backBuffer = resources.getTexture("output");
+            slag::Rectangle view{{0,0},{ backBuffer->width(),backBuffer->height()}};
+            if(backBuffer->width() > 0 && backBuffer->height() > 0)
+            {
+                commandBuffer->setViewport(view);
+                commandBuffer->setScissors(view);
+            }
+            slag::Attachment renderSurface{.texture = backBuffer, .clearOnLoad = true, .clear={0.5, 0.5, 0.5, 0.5}};
+            commandBuffer->setTargetFramebuffer(view, &renderSurface, 1);
+
+            commandBuffer->endTargetFramebuffer();
+        });
+        fgb.addPass(gp);
+
+        slag::GraphicsPass presentPass("present",slag::PipelineStage::BOTTOM);
+        presentPass.addGlobalTexture("output",slag::Texture::COLOR,slag::Texture::Layout::PRESENT,slag::PipelineAccess::PipeLineAccessFlags::NONE);
+        presentPass.setCallback([](slag::CommandBuffer* commandBuffer, slag::FrameResourceDictionary& resources, void* extra)
+        {
+            //std::cout<< "made presentable"<< std::endl;
+        });
+        fgb.addPass(presentPass);
+
 
         auto* commandBuffer = frame->getCommandBuffer();
+        auto fg = fgb.compile();
+        fg.setOutputTexture(frame->getBackBuffer());
+        fg.execute(commandBuffer);
 
-        slag::Texture* backBuffer = frame->getBackBuffer();
-        slag::Rectangle view{{0,0},{ backBuffer->width(),backBuffer->height()}};
-        if(backBuffer->width() > 0 && backBuffer->height() > 0)
-        {
-            commandBuffer->setViewport(view);
-            commandBuffer->setScissors(view);
-        }
-        slag::Attachment renderSurface{.texture = backBuffer, .clearOnLoad = true, .clear={0.5, 0.5, 0.5, 0.5}};
-        commandBuffer->setTargetFramebuffer(view, &renderSurface, 1);
 
-        commandBuffer->endTargetFramebuffer();
         frame->end();
     }
 

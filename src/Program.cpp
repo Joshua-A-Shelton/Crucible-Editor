@@ -2,6 +2,7 @@
 #include <crucible/Engine.h>
 #include "crucible/Scripting/ScriptingEngine.h"
 #include "Interop/EditorInterop.h"
+#include "Editor.h"
 
 int main(int argc, char** args)
 {
@@ -12,7 +13,9 @@ int main(int argc, char** args)
     crucible::EditorInterop::registerInteropFunctions();
     auto avaloniaMainClass = crucible::ScriptingEngine::getManagedType("CrucibleEditor.Main, Crucible-Editor");
     auto avaloniaMain = avaloniaMainClass.getFunction<void(*)()>("AvaloniaMain");
-    avaloniaMain();
+    //avaloniaMain();
+    crucible::Editor editor;
+    editor.run("test","/Crucible.png");
     crucible::ScriptingEngine::unloadManagedDllContext("CrucibleEditor");
     crucible::Engine::cleanup();
 }
