@@ -41,7 +41,8 @@ set(SHADER_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/Graphics/DefaultShaders)
 
 file(GLOB SHADERS
         ${SHADER_SOURCE_DIR}/*.vert
-        ${SHADER_SOURCE_DIR}/*.frag)
+        ${SHADER_SOURCE_DIR}/*.frag
+        ${SHADER_SOURCE_DIR}/*.comp)
 
 add_custom_command(
         COMMAND

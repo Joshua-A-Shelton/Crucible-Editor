@@ -11,7 +11,7 @@
     <TreeView ItemsSource="{Binding ElementName=element, Path=GameObjects}" SelectedItem="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedNode, Mode=TwoWay}">
         <TreeView.ItemTemplate>
             <TreeDataTemplate DataType="{x:Type nodes:Node}" ItemsSource="{Binding Children}">
-                <TextBlock Text="{Binding Name}" Foreground="Orange"></TextBlock>
+                <TextBlock Text="{Binding Name}"></TextBlock>
             </TreeDataTemplate>
         </TreeView.ItemTemplate>
     </TreeView>

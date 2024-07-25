@@ -30,7 +30,7 @@
         <np:TabbedDockGroup>
           <np:DockItem Header="Scene"
                        DockId="Scene">
-            <controls:CrucibleWindow/>
+            <controls:SceneView/>
           </np:DockItem>
         </np:TabbedDockGroup>
         <np:StackDockGroup TheOrientation="Vertical">

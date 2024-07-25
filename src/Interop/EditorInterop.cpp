@@ -5,6 +5,7 @@ namespace crucible
 {
     void EditorInterop::registerInteropFunctions()
     {
-        //crucible::ScriptingEngine::registerUnmanagedFunction("CrucibleEditor.Controls.SceneView, Crucible-Editor", "_createSceneView", reinterpret_cast<void **>(Editor::createNewEditor));
+        crucible::ScriptingEngine::registerUnmanagedFunction("CrucibleEditor.Controls.SceneView, Crucible-Editor", "_createSceneView", reinterpret_cast<void **>(Editor::createNewEditor));
+        crucible::ScriptingEngine::registerUnmanagedFunction("CrucibleEditor.Controls.SceneView, Crucible-Editor", "_destroySceneView", reinterpret_cast<void **>(Editor::destroyEditor));
     }
 } // crucible
