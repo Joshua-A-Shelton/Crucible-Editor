@@ -1,0 +1,19 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:crucible="clr-namespace:Crucible;assembly=Crucible-Runtime"
+             xmlns:crucibleEditor="clr-namespace:CrucibleEditor"
+             xmlns:nodes="clr-namespace:Crucible.Nodes;assembly=Crucible-Runtime"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CrucibleEditor.Controls.SceneTree"
+             Name="element">
+    <TreeView ItemsSource="{Binding ElementName=element, Path=GameObjects}" SelectedItem="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedNode, Mode=TwoWay}">
+        <TreeView.ItemTemplate>
+            <TreeDataTemplate DataType="{x:Type nodes:Node}" ItemsSource="{Binding Children}">
+                <TextBlock Text="{Binding Name}"></TextBlock>
+            </TreeDataTemplate>
+        </TreeView.ItemTemplate>
+    </TreeView>
+    
+</UserControl>

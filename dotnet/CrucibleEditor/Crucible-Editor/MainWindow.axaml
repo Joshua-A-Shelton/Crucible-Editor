@@ -1,0 +1,47 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:np="https://np.com/visuals"
+        xmlns:controls="clr-namespace:CrucibleEditor.Controls"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="CrucibleEditor.MainWindow"
+        x:DataType="Window"
+        Title="Crucible Editor"
+        Icon="/Resources/Crucible.ico"
+        np:DockAttachedProperties.TheDockManager="{DynamicResource TheDockManager}"
+        np:DockAttachedProperties.DockChildWindowOwner="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        np:DockAttachedProperties.WindowId="TheMainWindow">
+    <Window.Resources>
+    <ResourceDictionary>
+      <np:DockManager x:Key="TheDockManager"/>
+    </ResourceDictionary>
+  </Window.Resources>
+  <Grid RowDefinitions="Auto, *">
+    <Menu Grid.Row="0">
+      <MenuItem Header="_File"></MenuItem>
+    </Menu>
+    <np:RootDockGroup Grid.Row="1" DockId="RootGroup" np:DockAttachedProperties.TheDockManager="{StaticResource TheDockManager}">
+      <np:StackDockGroup TheOrientation="Horizontal">
+        <np:StackDockGroup TheOrientation="Vertical">
+          <np:DockItem Header="Scene Tree" DockId="SceneTree"><controls:SceneTree></controls:SceneTree></np:DockItem>
+          <np:DockItem Header="Resources" DockId="Resources"></np:DockItem>
+        </np:StackDockGroup>
+        <np:TabbedDockGroup>
+          <np:DockItem Header="Scene"
+                       DockId="Scene">
+            <controls:SceneView/>
+          </np:DockItem>
+        </np:TabbedDockGroup>
+        <np:StackDockGroup TheOrientation="Vertical">
+          <np:StackDockGroup TheOrientation="Horizontal">
+            <np:DockItem Header="Properties" DockId="Properties">
+              <controls:PropertyViewer/>
+            </np:DockItem>
+          </np:StackDockGroup>
+        </np:StackDockGroup>
+      </np:StackDockGroup>
+    </np:RootDockGroup>
+    
+  </Grid>
+</Window>

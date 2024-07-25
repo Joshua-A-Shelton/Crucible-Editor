@@ -1,0 +1,13 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:crucibleEditor="clr-namespace:CrucibleEditor"
+             xmlns:editors="clr-namespace:CrucibleEditor.Editors"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CrucibleEditor.Controls.PropertyViewer">
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedNode}"></TextBlock>
+        <editors:BasicEditor Editing="{Binding Source={x:Static crucibleEditor:GameWorldController.Instance}, Path=SelectedNode}"/> 
+    </StackPanel>
+</UserControl>

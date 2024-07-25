@@ -18,6 +18,6 @@ layout(location = 0) out struct { vec2 UV; } Out;
 
 void main()
 {
-    gl_Position = Globals.camera * vec4(position,1);
+    gl_Position = Globals.camera * Locals.position * vec4(position,1);
     Out.UV = uv;
 }

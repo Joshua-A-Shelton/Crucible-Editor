@@ -1,0 +1,14 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:crucibleEditor="clr-namespace:CrucibleEditor"
+             x:Class="CrucibleEditor.App"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.Styles>
+        <FluentTheme/>
+        <StyleInclude Source="avares://NP.Ava.Visuals/Themes/TextStyles.axaml"/>
+        <StyleInclude Source="avares://NP.Ava.Visuals/Themes/CustomWindowStyles.axaml"/>
+        <StyleInclude Source="avares://NP.Ava.UniDock/Themes/DockStyles.axaml"/>
+    </Application.Styles>
+</Application>

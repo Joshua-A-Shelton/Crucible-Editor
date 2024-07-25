@@ -1,6 +1,3 @@
-[submodule "third-party/dear-imgui"]
-	path = third-party/dear-imgui
-	url = https://github.com/ocornut/imgui
 [submodule "third-party/crucible"]
 	path = third-party/crucible
 	url = https://github.com/Joshua-A-Shelton/Crucible
