@@ -31,7 +31,7 @@ endif()
 
 add_subdirectory(third-party/crucible)
 
-add_executable(CrucibleEditor ${CRUCIBLE_DEAR_IMGUI} src/Program.cpp src/Graphics/Fonts.h src/Editor.cpp src/Editor.h src/Interop/EditorInterop.cpp src/Interop/EditorInterop.h)
+add_executable(CrucibleEditor ${CRUCIBLE_DEAR_IMGUI} src/Program.cpp src/Editor.cpp src/Editor.h src/Interop/EditorInterop.cpp src/Interop/EditorInterop.h)
 target_link_libraries(CrucibleEditor Crucible)
 #==============================================================================
 # COMPILE SHADERS
