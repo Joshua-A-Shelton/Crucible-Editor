@@ -6,6 +6,7 @@
 #include "crucible/Graphics/Shaders/ShaderLibrary.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <fstream>
 
 namespace crucible
 {
@@ -70,6 +71,7 @@ namespace crucible
         builder.setDesiredPixelFormat(slag::Pixels::PixelFormat::B8G8R8A8_SRGB);
     }
 
+
     void Editor::processEvents()
     {
         SDL_Event e;
@@ -97,6 +99,7 @@ namespace crucible
     {
         Game::update(deltaTime);
     }
+
 
     void Editor::render(slag::Frame *frame)
     {
