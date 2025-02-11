@@ -17,14 +17,6 @@ int main()
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multiple Viewports
 
-
-        auto flags = SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE;
-        if(slag::SlagLib::usingBackEnd() == slag::VULKAN)
-        {
-            flags|= SDL_WINDOW_VULKAN;
-        }
-        auto window = SDL_CreateWindow("Crucible Editor",500,800,flags);
-
         slag::SamplerBuilder sb;
         auto uiSampler = sb.newSampler();
 
@@ -32,7 +24,6 @@ int main()
         editor.run();
 
         delete uiSampler;
-        SDL_DestroyWindow(window);
     }
     ImGui::DestroyContext();
     crucible::Crucible::cleanup();
